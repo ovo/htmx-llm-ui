@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LLM Chat Interface</title>
+    <script
+      src="https://unpkg.com/htmx.org@2.0.1"
+      integrity="sha384-QWGpdj554B4ETpJJC9z+ZHJcA/i59TyjxEPXiiUgN2WmTyV5OEZWCD6gQhgkdpB/"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <div class="chat-container">
+      <div id="chat-messages">
+        <!-- Chat messages will be inserted here -->
+      </div>
+      <form
+        hx-post="/chat"
+        hx-target="#chat-messages"
+        hx-swap="beforeend"
+        hx-trigger="submit, clearInput"
+      >
+        <input
+          id="message-input"
+          type="text"
+          name="message"
+          placeholder="Type your message..."
+          required
+        />
+        <button type="submit">Send</button>
+      </form>
+    </div>
+    <script>
+      document.body.addEventListener("htmx:afterRequest", function (event) {
+        if (
+          event.detail.elt.getAttribute("hx-trigger").includes("clearInput")
+        ) {
+          document.getElementById("message-input").value = "";
+        }
+      });
+
+      function clearInput() {
+        document.getElementById("message-input").value = "";
+      }
+    </script>
+  </body>
+</html>
