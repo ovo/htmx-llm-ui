@@ -1,4 +1,4 @@
-LLM Interface
+# LLM Interface
 
 ![img](/img/screenshot.png)
 
